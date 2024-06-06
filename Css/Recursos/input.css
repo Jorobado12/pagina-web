@@ -1,0 +1,80 @@
+.inputGroup {
+  font-family: 'Comic Sans MS', cursive, sans-serif; /* Fuente Comic Sans */
+  margin: 1em 0;
+  position: relative;
+}
+
+.inputGroup input,
+.inputGroup select {
+  font-size: 100%;
+  padding: 0.8em;
+  outline: none;
+  border: 2px solid rgb(200, 200, 200);
+  background-color: transparent;
+  border-radius: 1em;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.inputGroup label {
+  font-size: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0.8em;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  color: rgb(100, 100, 100);
+}
+
+.inputGroup input:focus + label,
+.inputGroup input:not(:placeholder-shown) + label,
+.inputGroup select:focus + label,
+.inputGroup select:not([value=""]) + label {
+  top: 0;
+  left: 0.8em;
+  font-size: 0.75em;
+  color: rgb(50, 50, 50);
+  background-color: white;
+  padding: 0 0.3em;
+  border-radius: 0.3em;
+}
+
+.customSelectGroup {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 1em 0;
+  position: relative;
+}
+
+.customSelectGroup select {
+  font-size: 100%;
+  padding: 0.8em;
+  outline: none;
+  border: 2px solid rgb(200, 200, 200);
+  background-color: transparent;
+  border-radius: 1em;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.customSelectGroup label {
+  font-size: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0.8em;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  color: rgb(100, 100, 100);
+}
+
+.customSelectGroup select:focus + label,
+.customSelectGroup select:not([value=""]) + label {
+  top: 0;
+  left: 0.8em;
+  font-size: 0.75em;
+  color: rgb(50, 50, 50);
+  background-color: white;
+  padding: 0 0.3em;
+  border-radius: 0.3em;
+}

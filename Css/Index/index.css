@@ -1,0 +1,17 @@
+
+
+.header {
+    transition: top 0.3s;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.navbar .logo {
+    width: 30px; /* Adjust this value to make the logo smaller */
+    height: auto;
+}
+body {
+    padding-top: 60px; /* Adjust this value to ensure content is not hidden behind the fixed header */
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* Fuente Comic Sans */
+}

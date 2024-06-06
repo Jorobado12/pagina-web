@@ -1,0 +1,19 @@
+/* Inicialmente, solo mostramos el texto */
+.volver-link .volver-text {
+    display: inline;
+}
+.volver-link .volver-icono {
+    display: none;
+}
+
+/* Para pantallas pequeñas (menos de 600px) */
+@media (max-width: 600px) {
+    .volver-link .volver-text {
+        display: none;
+    }
+    .volver-link .volver-icono {
+        display: inline;
+        width: 24px;  /* Ajusta el tamaño del ícono según sea necesario */
+        height: auto;
+    }
+}

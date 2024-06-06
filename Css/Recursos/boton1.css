@@ -1,0 +1,42 @@
+.minimal-button {
+    padding: 17px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 0;
+    background-color: #a7c7e7; /* Azul celeste pastel */
+    color: #333; /* Color del texto */
+    box-shadow: 0 0 8px rgb(0 0 0 / 5%);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all 0.5s ease;
+}
+
+.minimal-button:hover {
+    letter-spacing: 3px;
+    background-color: #d3d3d3; /* Blanco grisáceo */
+    color: #333;
+    box-shadow: 0 7px 29px rgb(150 150 150 / 50%);
+}
+
+.minimal-button:active {
+    letter-spacing: 3px;
+    background-color: #d3d3d3; /* Blanco grisáceo */
+    color: #333;
+    box-shadow: 0 0 0 rgb(150 150 150 / 50%);
+    transform: translateY(10px);
+    transition: 100ms;
+}
+
+.btn-circle {
+    width: 50px; /* ajusta el tamaño según tus necesidades */
+    height: 50px; /* ajusta el tamaño según tus necesidades */
+    border-radius: 50%;
+    background-color: rgb(77, 77, 255);
+    padding: 0; /* eliminamos el relleno interior para que el botón sea completamente circular */
+    transition: background-color 0.3s; /* agregamos una transición suave */
+}
+
+.btn-circle:hover {
+    background-color: rgb(207, 187, 187); /* cambiamos el color de fondo al pasar el mouse sobre el botón */
+}

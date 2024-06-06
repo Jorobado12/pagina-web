@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    
+    <!-- External CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/Css/Index/index.css">
+    <link rel="stylesheet" href="/Css/Recursos/boton1.css">
+    <link rel="stylesheet" href="/Css/Index/general.css">
+    <link rel="stylesheet" href="/Css/Recursos/scrollbar.css">
+    
+    <!-- External JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Internal JavaScript -->
+    <script type="module" src="/Controllers/storage/crud.js"></script>
+    <script src="/Controllers/Index/some_things.js"></script>
+    <script type="module" src="/Controllers/firebase/administrador.js"></script>
+    <script src="/Controllers/Index/index.js"></script>
+    <link rel="stylesheet" href="/Css/Recursos/input.css">
+    <script type="module" src="/Controllers/storage/loadcomm.js"></script>
+
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/Resources/Img/Logo/logo1.ico">
+
+</head>
+<body>
+
+    <style>
+
+        .button-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            border-radius: 5px;
+        }
+
+        .logo-img {
+            width: 30px; /* ajusta el tamaño según lo necesites */
+            height: auto; /* para mantener la proporción */
+        }
+        #productdescription {
+            min-height: 100px; /* Altura mínima del cuadro de texto */
+            resize: vertical; /* Permitir solo el redimensionamiento vertical */
+        }
+
+        .custom-card {
+            min-height: 100px !important; /* ajusta este valor según tus necesidades */
+            /* Puedes también utilizar height: auto !important; para permitir que la altura se ajuste automáticamente */
+        }
+
+        .card {
+            margin-bottom: 10px; /* Espacio entre cada tarjeta de comentario */
+            padding: 8px; /* Ajuste del espaciado interno de la tarjeta de comentario */
+            background-color: rgba(255, 255, 255, 0.7); /* Color de fondo con opacidad */
+            border-radius: 8px; /* Añade bordes redondeados a la tarjeta */
+            height: 10x; /* ajusta este valor según tus necesidades */
+        }
+
+        .timestamp {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: x-small; /* Hace que la letra sea un poco más pequeña */
+            color: rgba(0, 0, 0, 0.5); /* Esto hace que el color del texto sea más suave */
+            font-style: italic; /* Agrega cursiva */
+        }
+    </style>
+
+
+<header class="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="/Resources/Img/Logo/logo1.ico" alt="Logo" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="btnUsuarios">Usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="btnOtros">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="btnComentarios">Comentarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="btnlogout">Salir</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<div>
+    <div id="usuariosContainer" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div id="loginFormContainer">
+                    <div class="col-12 p-4 rounded shadow-lg bg-light">
+                        <h2 class="mb-4 text-center">Administración de Usuarios</h2>
+                        <div class="d-flex justify-content-between mb-3">
+                            <button class="btn btn-circle d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#addUserModal" id="btnOpenAddUserModal">
+                                <img src="/Resources/Img/Gicon/add_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="Icono de Más" style="width: 20px; height: 20px;">
+                            </button>
+                        </div>
+                        <div class="d-flex justify-content-center h-100">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Dirección</th>
+                                        <th scope="col">Teléfono</th>
+                                        <th scope="col">Género</th>
+                                        <th scope="col">Rh</th>
+                                        <th scope="col">Correo</th>
+                                        <th scope="col">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="vdata">
+                                    <!-- Datos de los usuarios aquí -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="mensajeUsuarios" class="text-center"></div> <!-- Contenedor para el mensaje -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="otrosContainer" class="container mt-5" style="display: none;">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div id="otrosFormContainer">
+                        <div id="productosContainer" class="container mt-5">
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <div id="loginFormContainer">
+                                        <div class="col-12 p-4 rounded shadow-lg bg-light">
+                                            <h2 class="mb-4 text-center">Administración de Productos</h2>
+                                            <div class="d-flex justify-content-between mb-3">
+                                                <button class="btn btn-circle d-flex justify-content-center align-items-center" data-bs-toggle="modal" data-bs-target="#addProductModal" id="btnOpenAddProductModal">
+                                                    <img src="/Resources/Img/Gicon/add_24dp_FILL0_wght400_GRAD0_opsz24.png" alt="Icono de Más" style="width: 20px; height: 20px;">
+                                                </button>
+                                            </div>
+                                            <div class="d-flex justify-content-center h-100">
+                                                <table class="table table-hover">
+                                                    <thead class="table-dark">
+                                                        <tr>
+                                                            <th scope="col">Id</th>
+                                                            <th scope="col">Nombre</th>
+                                                            <th scope="col">Precio</th>
+                                                            <th scope="col">Descripcion</th>
+                                                            <th scope="col">Imagen</th>
+                                                            <th scope="col">Acción</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="dataproducts">
+                                                        <!-- Datos de los productos aquí -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div id="mensajeProductos" class="text-center"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <!-- Modal para agregar/editar producto -->
+                        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addProductModalLabel">Opciones de Producto</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="addProductForm">
+                                            <div class="form-group mb-3 inputGroup">
+                                                <input type="text" class="form-control" id="productid" placeholder="ID" required>
+                                            </div>
+                                            <div class="form-group mb-3 inputGroup">
+                                                <input type="text" class="form-control" id="productname" placeholder="Nombre" required>
+                                            </div>
+                                            <div class="form-group mb-3 inputGroup">
+                                                <input type="number" class="form-control" id="productprice" placeholder="Precio" required>
+                                            </div>
+                                            <div class="form-group mb-3 inputGroup">
+                                                <textarea class="form-control" id="productdescription" placeholder="Descripción" required style="resize: vertical;"></textarea>
+                                            </div>
+                                            <div class="form-group mb-3 inputGroup">
+                                                <input type="file" class="form-control" id="productimg" accept="image/*">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Guardar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar usuario -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Opciones de usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <div class="form-group mb-3 inputGroup">
+                            <input type="text" class="form-control" id="Id" placeholder="ID" required>
+                        </div>
+                        <div class="form-group mb-3 inputGroup">
+                            <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
+                        </div>
+                        <div class="form-group mb-3 inputGroup">
+                            <input type="date" class="form-control" id="fecha" placeholder="Fecha de nacimiento" required>
+                        </div>
+                        <div class="form-group mb-3 inputGroup">
+                            <input type="text" class="form-control" id="direccion" placeholder="Dirección" required>
+                        </div>
+                        <div class="form-group mb-3 inputGroup">
+                            <input type="text" class="form-control" id="telefono" placeholder="Teléfono" required>
+                        </div>
+                        <div class="form-group mb-3 inputGroup">
+                            <select class="form-control" id="genero" required>
+                                <option value="" disabled selected hidden>Género</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3 inputGroup">
+                            <select class="form-control" id="rh" required>
+                                <option value="" disabled selected hidden>Tipo de sangre y Rh</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3 inputGroup">
+                            <input type="email" class="form-control" id="correo" placeholder="Correo electrónico" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="comentariosContainer" class="container mt-5" style="display: none;">
+        <div class="d-flex justify-content-center">
+            <h1>Comentarios</h1>
+        </div>
+
+        <div class="comments">
+            
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Inicialmente, cargar datos de usuarios y mostrar el contenedor de usuarios
+        $("#usuariosContainer").show();
+        $("#otrosContainer").hide();
+        $("#comentariosContainer").hide();
+    
+        // Manejar clic en el botón "Usuarios"
+        $("#btnUsuarios").on("click", function (e) {
+            e.preventDefault();
+            $("#otrosContainer").hide();
+            $("#comentariosContainer").hide();
+            $("#usuariosContainer").show();
+        });
+    
+        // Manejar clic en el botón "Otros"
+        $("#btnOtros").on("click", function (e) {
+            e.preventDefault();
+            $("#usuariosContainer").hide();
+            $("#comentariosContainer").hide();
+            $("#otrosContainer").show();
+        });
+    
+        // Manejar clic en el botón "Comentarios"
+        $("#btnComentarios").on("click", function (e) {
+            e.preventDefault();
+            $("#usuariosContainer").hide();
+            $("#otrosContainer").hide();
+            $("#comentariosContainer").show();
+        });
+    });
+    </script>
+
+<!-- Scripts de Bootstrap y jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+
+
+</body>
+
+<script>
+    // Función para verificar si la tabla está vacía y mostrar el mensaje
+    function checkEmptyTable() {
+        var tablaUsuarios = document.getElementById("vdata");
+        var mensajeUsuarios = document.getElementById("mensajeUsuarios");
+
+        // Verificar si la tabla de usuarios está vacía
+        if (tablaUsuarios.children.length === 0) {
+            // Si está vacía, mostrar mensaje
+            mensajeUsuarios.innerHTML = "<p>No hay usuarios registrados.</p>";
+        } else {
+            // Si no está vacía, asegurarse de que el mensaje esté oculto
+            mensajeUsuarios.innerHTML = "";
+        }
+    }
+
+    // Observador de mutaciones para la tabla de usuarios
+    var observer = new MutationObserver(checkEmptyTable);
+
+    // Configurar el observador para que observe los cambios en la tabla de usuarios
+    var config = { childList: true };
+    observer.observe(document.getElementById("vdata"), config);
+
+    // Verificar el estado de la tabla al cargar la página
+    window.addEventListener("load", checkEmptyTable);
+
+
+
+    // Event listener para limpiar los campos del formulario al cerrar el modal
+$('#addUserModal').on('hidden.bs.modal', function () {
+    const form = document.getElementById('addUserForm');
+    form.reset();
+});
+
+document.getElementById('btnOpenAddUserModal').addEventListener('click', function(event) {
+    event.preventDefault();
+});
+</script>
+
+</html>

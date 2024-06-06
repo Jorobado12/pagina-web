@@ -1,0 +1,30 @@
+html, body {
+    scroll-behavior: smooth;
+    --sb-track-color: #ffffff;
+    --sb-thumb-color: #9c6cf0;
+    --sb-size: 6px;
+  
+    overflow-y: auto;
+  }
+  
+  body::-webkit-scrollbar {
+    width: var(--sb-size);
+  }
+  
+  body::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 10px;
+  }
+  
+  body::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 10px;
+  }
+
+  .scroll-link {
+    scroll-behavior: smooth;
+  }
+
+  html {
+    scroll-behavior: smooth;
+}
